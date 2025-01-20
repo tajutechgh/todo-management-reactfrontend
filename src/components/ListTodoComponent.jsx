@@ -16,7 +16,7 @@ const ListTodoComponent = () => {
       function addNewTodo(){
 
             navigator('/add-todo')
-        }
+      }
       
       function listTodos(){
 
@@ -41,6 +41,8 @@ const ListTodoComponent = () => {
     
             deleteTodo(id).then((response) => {
 
+                  console.log(response.data);
+
                   alert("Todo deleted successfully");
     
                   listTodos();
@@ -55,6 +57,8 @@ const ListTodoComponent = () => {
            
             completeTodo(id).then((response) => {
 
+                  console.log(response.data);
+
                   alert("Todo completed");
 
                   listTodos();
@@ -68,6 +72,8 @@ const ListTodoComponent = () => {
       function todoInCompleted(id) {
            
             inCompleteTodo(id).then((response) => {
+
+                  console.log(response.data);
 
                   alert("Todo incomplete");
 
@@ -91,7 +97,7 @@ const ListTodoComponent = () => {
                                           <th>Todo Title</th>
                                           <th>Todo Description</th>
                                           <th>Completed</th>
-                                          <th width='38%'>Action</th>
+                                          <th width='17%'>Action</th>
                                     </tr>
                               </thead>
                               <tbody>
@@ -103,10 +109,10 @@ const ListTodoComponent = () => {
                                                       <td>{todo.description}</td>
                                                       <td>{todo.completed ? 'Yes' : 'No'}</td>
                                                       <td>
-                                                            <button className='btn btn-success bi bi-pencil-square' onClick={() => updateTodo(todo.id)}> Update</button>
-                                                            <button className='btn btn-danger bi bi-trash' onClick={() => removeTodo(todo.id)} style={{marginLeft: '10px'}}> Delete</button>
-                                                            <button className='btn btn-success bi bi-check-lg' onClick={() => todoCompleted(todo.id)} style={{marginLeft: '10px'}}> Complete</button>
-                                                            <button className='btn btn-danger bi bi-x-lg' onClick={() => todoInCompleted(todo.id)} style={{marginLeft: '10px'}}> Incomplete</button>
+                                                            <button className='btn btn-success bi bi-pencil-square' onClick={() => updateTodo(todo.id)}></button>
+                                                            <button className='btn btn-danger bi bi-trash' onClick={() => removeTodo(todo.id)} style={{marginLeft: '10px'}}></button>
+                                                            <button className='btn btn-success bi bi-check-lg' onClick={() => todoCompleted(todo.id)} style={{marginLeft: '10px'}}></button>
+                                                            <button className='btn btn-danger bi bi-x-lg' onClick={() => todoInCompleted(todo.id)} style={{marginLeft: '10px'}}></button>
                                                       </td>
                                                 </tr>
                                           )

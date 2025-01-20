@@ -94,7 +94,7 @@ const TodoComponent = () => {
     
             if(description.trim()){
     
-                errorsCopy.lastName = '';
+                errorsCopy.description = '';
     
             } else {
     
