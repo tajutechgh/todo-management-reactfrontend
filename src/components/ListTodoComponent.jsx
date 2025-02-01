@@ -3,7 +3,6 @@ import { getAllTodos, deleteTodo,  completeTodo, inCompleteTodo } from '../servi
 import { useNavigate } from 'react-router-dom'
 import { isAdminUser } from '../services/AuthService';
 
-
 const ListTodoComponent = () => {
 
       const [todos, setTodos] = useState([]);
@@ -11,6 +10,16 @@ const ListTodoComponent = () => {
       const navigator = useNavigate();
 
       const isAdmin = isAdminUser();
+
+      //pagination
+      const [currentPage, setCurrentPage] = useState(1);
+      const todosPerPage = 7;
+      const lastIndex = currentPage * todosPerPage;
+      const firstIndex = lastIndex - todosPerPage;
+      const records = todos.slice(firstIndex, lastIndex);
+      const npages = Math.ceil(todos.length / todosPerPage);
+      const pageNumbers = [...Array(npages + 1).keys()].slice(1);
+      //end pagination
 
       useEffect(() => {
             listTodos();
@@ -108,7 +117,7 @@ const ListTodoComponent = () => {
                               </thead>
                               <tbody>
                                     {
-                                          todos.map(todo => 
+                                          records.map(todo => 
                                                 <tr key={todo.id}>
                                                       <th scope="row">{todo.id}</th>
                                                       <td>{todo.title}</td>
@@ -130,10 +139,48 @@ const ListTodoComponent = () => {
                                           )
                                     }
                               </tbody>
-                        </table>   
+                        </table> 
+                        <nav aria-label="Page navigation example">
+                              <ul className="pagination justify-content-center">
+                                    <li className="page-item">
+                                          <a className="page-link" href="#" onClick={prevPage}>Previous</a>
+                                    </li>
+                                    {
+                                          pageNumbers.map((pageNum, index) => (
+                                                <li className={"page-item ${currentPage === pageNum ? 'active' : ''}"} key={index}>
+                                                      <a className="page-link" href="#" onClick={() => changeCurrentPage(pageNum)}>{pageNum}</a>
+                                                </li>
+                                          ))
+                                    }
+                                    <li className="page-item">
+                                          <a className="page-link" href="#" onClick={nextPage}>Next</a>
+                                    </li>
+                              </ul>
+                        </nav>  
                   </div>
             </div>
       )
+
+      function prevPage() {
+
+            if (currentPage !== 1) {
+
+                  setCurrentPage(currentPage - 1);
+            }
+      }
+
+      function changeCurrentPage(id){
+            
+           setCurrentPage(id); 
+      }
+
+      function nextPage() {
+
+            if (currentPage !== npages) {
+
+                  setCurrentPage(currentPage + 1);
+            }
+      }
 }
 
 export default ListTodoComponent
